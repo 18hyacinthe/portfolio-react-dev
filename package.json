@@ -23,7 +23,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node start.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "browserslist": {
     "production": [
