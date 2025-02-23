@@ -27,7 +27,7 @@ function Header() {
             <span className="text-neon-purple animate-pulse">Bienvenue !</span>
           ) : (
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-300">
-              Mon Portfolio de Développeur
+              Mon Portfolio !
             </span>
           )}
         </h1>
