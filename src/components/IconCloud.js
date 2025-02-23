@@ -26,8 +26,8 @@ function IconCloud({ icons, images }) {
 
     const newIconCanvases = items.map((item, index) => {
       const offscreen = document.createElement("canvas");
-      offscreen.width = 40;
-      offscreen.height = 40;
+      offscreen.width = 80; // Augmentation de la taille
+      offscreen.height = 80; // Augmentation de la taille
       const offCtx = offscreen.getContext("2d");
 
       if (offCtx) {
@@ -38,14 +38,14 @@ function IconCloud({ icons, images }) {
           img.onload = () => {
             offCtx.clearRect(0, 0, offscreen.width, offscreen.height);
             offCtx.beginPath();
-            offCtx.arc(20, 20, 20, 0, Math.PI * 2);
+            offCtx.arc(40, 40, 40, 0, Math.PI * 2);
             offCtx.closePath();
             offCtx.clip();
-            offCtx.drawImage(img, 0, 0, 40, 40);
+            offCtx.drawImage(img, 0, 0, 80, 80);
             imagesLoadedRef.current[index] = true;
           };
         } else {
-          offCtx.scale(0.4, 0.4);
+          offCtx.scale(0.8, 0.8); // Augmentation de l'échelle
           const svgString = renderToString(item);
           const img = new Image();
           img.src = "data:image/svg+xml;base64," + btoa(svgString);
@@ -78,9 +78,9 @@ function IconCloud({ icons, images }) {
       const z = Math.sin(phi) * r;
 
       newIcons.push({
-        x: x * 100,
-        y: y * 100,
-        z: z * 100,
+        x: x * 150, // Augmentation de la distribution
+        y: y * 150, // Augmentation de la distribution
+        z: z * 150, // Augmentation de la distribution
         scale: 1,
         opacity: 1,
         id: i,
@@ -221,28 +221,21 @@ function IconCloud({ icons, images }) {
         const rotatedZ = icon.x * sinY + icon.z * cosY;
         const rotatedY = icon.y * cosX + rotatedZ * sinX;
 
-        const scale = (rotatedZ + 200) / 300;
-        const opacity = Math.max(0.2, Math.min(1, (rotatedZ + 150) / 200));
+        const scale = (rotatedZ + 300) / 400; // Ajusté pour une meilleure échelle
+        const opacity = Math.max(0.3, Math.min(1, (rotatedZ + 200) / 250)); // Ajusté pour plus de visibilité
 
         ctx.save();
-        ctx.translate(canvas.width / 2 + rotatedX, canvas.height / 2 + rotatedY);
-        ctx.scale(scale, scale);
+        ctx.translate(
+          canvas.width / 2 + rotatedX,
+          canvas.height / 2 + rotatedY
+        );
+        ctx.scale(scale * 1.5, scale * 1.5); // Augmentation de la taille globale des icônes
         ctx.globalAlpha = opacity;
 
         if (icons || images) {
           if (iconCanvasesRef.current[index] && imagesLoadedRef.current[index]) {
-            ctx.drawImage(iconCanvasesRef.current[index], -20, -20, 40, 40);
+            ctx.drawImage(iconCanvasesRef.current[index], -40, -40, 80, 80); // Doublé la taille de rendu
           }
-        } else {
-          ctx.beginPath();
-          ctx.arc(0, 0, 20, 0, Math.PI * 2);
-          ctx.fillStyle = "#4444ff";
-          ctx.fill();
-          ctx.fillStyle = "white";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.font = "16px Arial";
-          ctx.fillText(`${icon.id + 1}`, 0, 0);
         }
 
         ctx.restore();
@@ -262,15 +255,16 @@ function IconCloud({ icons, images }) {
   return (
     <canvas
       ref={canvasRef}
-      width={400}
-      height={400}
+      width={1000}
+      height={1000}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
-      className="rounded-lg"
+      className="rounded-lg w-full h-full"
       aria-label="Interactive 3D Icon Cloud"
       role="img"
+      style={{ display: 'block', margin: 'auto' }}
     />
   );
 }
