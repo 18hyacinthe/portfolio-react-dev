@@ -25,7 +25,17 @@ export default defineConfig({
     exclude: []
   },
   server: {
-    host: true, // Écoute sur toutes les interfaces réseau (0.0.0.0)
-    port: process.env.PORT || 3000, // Utilise le port défini dans les variables d'environnement ou 3000 par défaut
+    host: true,
+    port: process.env.PORT || 3000,
+    strictPort: true,
+    allowedHosts: [
+      'portfolio-react-dev.onrender.com',
+      '.onrender.com'
+    ]
+  },
+  preview: {
+    port: process.env.PORT || 3000,
+    host: true,
+    strictPort: true
   }
 })

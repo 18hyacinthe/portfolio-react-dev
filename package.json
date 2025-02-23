@@ -24,7 +24,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node start.js"
+    "start": "vite preview"
   },
   "engines": {
     "node": ">=18.0.0"
